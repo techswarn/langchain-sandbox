@@ -31,10 +31,10 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 store = {}
 #Create LLM instance
 def llm_instance():
-    model_id = "google/gemma-2-9b-it"
+    model_id = "google/gemma-7b-it"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id)
-    pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=512)
+    pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=200)
     llm = HuggingFacePipeline(pipeline=pipe)
     return llm
 
@@ -60,7 +60,7 @@ def get_vectorstore_from_url():
     # Split the document into chunks
     text_splitter = RecursiveCharacterTextSplitter(chunk_size = 300,chunk_overlap = 70)
     document_chunks = text_splitter.split_documents(docs)
-
+    
     # Create a vector store from the chunks
     embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
     vector_store = Chroma.from_documents(document_chunks, embedding=embeddings)
