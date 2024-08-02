@@ -72,8 +72,8 @@ docs = loader.load()
 
 # Defining the splitter 
 document_splitter = RecursiveCharacterTextSplitter(
-    chunk_size = 250,
-    chunk_overlap = 50
+    chunk_size = 512,
+    chunk_overlap = 30
 )
 
 # splitting the document
@@ -98,8 +98,7 @@ system_prompt = (
     "You are an assistant for question-answering tasks. "
     "Use the following pieces of retrieved context to answer "
     "the question. If you don't know the answer, say that you "
-    "don't know. Use three sentences minimum and keep the "
-    "answer concise."
+    "don't know."
     "\n\n"
     "{context}"
 )
