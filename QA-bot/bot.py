@@ -144,14 +144,24 @@ def main():
         history_messages_key="chat_history",
         output_messages_key="answer",
     )   
-    response = conversational_rag_chain.invoke(
-        {"input": "Can I use SSH on App platform?"},
-        config={
-            "configurable": {"session_id": "abc123"}
-        },  # constructs a key "abc123" in `store`.
-    )["answer"] 
 
-    print(response)
+
+    # # defining the loop for a conversation with the AI
+    while True:
+        question = input("Enter your query: ")
+        if question == 'exit': 
+            break 
+        # getting the response
+
+        response = conversational_rag_chain.invoke(
+            {"input": question},
+            config={
+                "configurable": {"session_id": "abc123"}
+            },  # constructs a key "abc123" in `store`.
+        )["answer"] 
+
+        print(response)
+    
 
 
 if __name__ == "__main__":
