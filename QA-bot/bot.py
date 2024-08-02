@@ -60,7 +60,7 @@ def get_vectorstore_from_url():
     # Split the document into chunks
     text_splitter = RecursiveCharacterTextSplitter(chunk_size = 300,chunk_overlap = 70)
     document_chunks = text_splitter.split_documents(docs)
-    
+    print(document_chunks)
     # Create a vector store from the chunks
     embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
     vector_store = Chroma.from_documents(document_chunks, embedding=embeddings)
