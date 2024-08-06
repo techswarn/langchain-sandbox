@@ -58,7 +58,7 @@ def get_vectorstore_from_url():
 
     
     # Split the document into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 100,chunk_overlap = 20)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 1500,chunk_overlap = 70)
     document_chunks = text_splitter.split_documents(docs)
     
     # Create a vector store from the chunks
@@ -72,8 +72,7 @@ system_prompt = (
     "You are an assistant for question-answering tasks. "
     "Use the following pieces of retrieved context to answer "
     "the question. If you don't know the answer, say that you "
-    "don't know. Use three sentences minimum and keep the "
-    "answer concise."
+    "don't know. Make sure you answer in detail"
     "\n\n"
     "{context}"
 )
