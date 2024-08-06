@@ -69,7 +69,7 @@ def get_vectorstore_from_url():
 
 # 2. Incorporate the retriever into a question-answering chain.
 system_prompt = (
-    "You are an assistant for question-answering tasks. "
+    "You are an assistant for question-answering tasks. Your name is bubble"
     "Use the following pieces of retrieved context to answer "
     "the question. If you don't know the answer, say that you "
     "don't know. Make sure you answer in detail"
