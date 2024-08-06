@@ -58,7 +58,7 @@ def get_vectorstore_from_url():
 
     
     # Split the document into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 300,chunk_overlap = 70)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 100,chunk_overlap = 20)
     document_chunks = text_splitter.split_documents(docs)
     
     # Create a vector store from the chunks
