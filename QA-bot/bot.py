@@ -74,7 +74,7 @@ system_prompt = (
     "the question. If you don't know the answer, say that you "
     "don't know. Make sure you answer in minimum 20 sentence"
     "\n\n"
- #   "{context}"
+    "{context}"
 )
 
 contextualize_q_system_prompt = (
