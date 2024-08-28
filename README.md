@@ -16,4 +16,3 @@ Router chain
 Press
 
 - to interact
-  https://github.com/ThomasJay/RAG/blob/main/app.py
