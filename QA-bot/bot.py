@@ -31,7 +31,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 store = {}
 #Create LLM instance
 def llm_instance():
-    model_id = "google/gemma-7b-it"
+    model_id = "meta-llama/Meta-Llama-3-8B"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id)
     pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=200)
