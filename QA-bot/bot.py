@@ -31,7 +31,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 store = {}
 #Create LLM instance
 def llm_instance():
-    model_id = "meta-llama/Meta-Llama-3-8B"
+    model_id = "google/gemma-7b-it"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id)
     pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=200)
@@ -74,7 +74,7 @@ system_prompt = (
     "the question. If you don't know the answer, say that you "
     "don't know. Make sure you answer in minimum 20 sentence"
     "\n\n"
-    "{context}"
+ #   "{context}"
 )
 
 contextualize_q_system_prompt = (
