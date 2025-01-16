@@ -27,6 +27,7 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_community.document_transformers import BeautifulSoupTransformer
 from bs4 import BeautifulSoup
 from langchain_community.vectorstores import FAISS
+import re
 
 #transformer pipeline 
 from langchain_huggingface.llms import HuggingFacePipeline
