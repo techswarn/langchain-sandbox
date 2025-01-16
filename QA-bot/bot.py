@@ -24,6 +24,9 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_community.chat_message_histories import ChatMessageHistory
 
+from langchain_community.document_transformers import BeautifulSoupTransformer
+from bs4 import BeautifulSoup
+from langchain_community.vectorstores import FAISS
 
 #transformer pipeline 
 from langchain_huggingface.llms import HuggingFacePipeline
@@ -56,14 +59,44 @@ def get_vectorstore_from_url():
     loader.requests_per_second = 1
     docs = loader.load()  
 
+    # Use Beautifu soup to extract the page content
+    bs_transformer = BeautifulSoupTransformer()
+    docs_transformed = bs_transformer.transform_documents(docs)
+    docs_content = docs_transformed[0].page_content
     
-    # Split the document into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 1500,chunk_overlap = 70)
-    document_chunks = text_splitter.split_documents(docs)
+    # Remove HTML like tags and unnecessary backslashes
+    clean_text = re.sub(r'<\\?/?[a-zA-Z]+>', '', docs_content)  # Remove HTML-like tags
+    clean_text = re.sub(r'\\/[wp:paragrph]', ' ', clean_text)  # replace /wp:paragrph
+    clean_text = re.sub(r'\\[nr]', ' ', clean_text)  # Replace \n, \r with space
+    clean_text = re.sub(r'\\/', '/', clean_text)  # Fix escaped forward slashes
+
+    # Decode unicode escape sequences
+    clean_text = bytes(clean_text, "utf-8").decode("unicode_escape")
+
+    # Remove additional extraneous characters and whitespace
+    clean_text = re.sub(r'["]{2,}', '"', clean_text)  # Reduce multiple quotes
+    clean_text = re.sub(r'\s{2,}', ' ', clean_text)  # Reduce excessive spaces
+
+   # Reduce the number of tokens to exract only the desired content
+    data = clean_text[:6891]
+
+    # Split the text into chunks
+    text_splitter = RecursiveCharacterTextSplitter(
+        separators=[''],
+        chunk_size=256,
+        chunk_overlap=10,
+        length_function=len,
+        is_separator_regex=False,
+    )
+    chunks = text_splitter.create_documents([data])
     
     # Create a vector store from the chunks
     embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-    vector_store = Chroma.from_documents(document_chunks, embedding=embeddings)
+   # vector_store = Chroma.from_documents(document_chunks, embedding=embeddings)
+
+    # Load the data into the vector store and set the retriever
+    vectorstore = FAISS.from_documents(documents=chunks, embedding=embeddings)
+    retriever = vectorstore.as_retriever()
     
     return vector_store
 
