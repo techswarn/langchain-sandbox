@@ -83,10 +83,10 @@ def get_vectorstore_from_url():
     
     # Create a vector store from the chunks
     embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-   # vector_store = Chroma.from_documents(document_chunks, embedding=embeddings)
+   vector_store = Chroma.from_documents(document_chunks, embedding=embeddings)
 
     # Load the data into the vector store and set the retriever
-    vectorstore = FAISS.from_documents(documents=chunks, embedding=embeddings)
+    #vectorstore = FAISS.from_documents(documents=chunks, embedding=embeddings)
     retriever = vectorstore.as_retriever()
     
     return vector_store
