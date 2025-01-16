@@ -82,7 +82,8 @@ def get_vectorstore_from_url():
     chunks = text_splitter.create_documents([data])
     
     # Create a vector store from the chunks
-    embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+   # embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+    embedding_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     vector_store = Chroma.from_documents(chunks, embedding=embeddings)
 
     # Load the data into the vector store and set the retriever
