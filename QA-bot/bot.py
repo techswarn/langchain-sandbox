@@ -79,7 +79,7 @@ def get_vectorstore_from_url():
         length_function=len,
         is_separator_regex=False,
     )
-    chunks = text_splitter.create_documents([data])
+    chunks = text_splitter.create_documents([docs_transformed])
     
     # Create a vector store from the chunks
    # embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
